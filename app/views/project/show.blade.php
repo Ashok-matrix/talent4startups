@@ -26,9 +26,8 @@
 			</div>
 		</div>
 		<div class="col-md-4">
-
 			@if($project->owner == $currentUser)
-				<a class="btn btn-primary btn-xs pull-right" href="{{ route('projects.edit', $project->url) }}">Edit Project</a>
+				<a id="edit-project" class="btn btn-primary btn-xs pull-right" href="{{ route('projects.edit', $project->url) }}">Edit Project</a>
 				<h2>Member requests</h2>
 
 				@foreach($requests as $user)

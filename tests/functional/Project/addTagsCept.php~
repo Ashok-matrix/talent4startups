@@ -1,0 +1,13 @@
+<?php
+$I = new FunctionalTester($scenario);
+$projectUrl = 'project-1';
+$projectId  = '30';
+$onpage     = '/projects/'.$projectUrl.'/edit';
+$I->amOnPage($onpage);
+$I->selectOption('tags[]',array('1','2'));
+$I->click('#submit-project');
+$I->seeRecord('project_tag', [
+	'project_id' => '1'
+]);
+
+

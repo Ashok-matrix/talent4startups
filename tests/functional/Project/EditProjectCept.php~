@@ -1,0 +1,10 @@
+<?php
+$I = new FunctionalTester($scenario);
+$projectUrl = 'project-1';
+$projectId  = '30';
+$onpage     = '/projects/'.$projectUrl.'/edit';
+$I->amOnPage($onpage);
+$I->click('#submit-project');
+$I->seeRecord('project', [
+	'id' => $projectId
+]);
