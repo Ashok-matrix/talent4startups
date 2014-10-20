@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Redirect;
 use Informulate\Forms\SignInForm;
+use Informulate\Users\Profile;
+use Informulate\Skills\Skill;
 
 class SessionsController extends BaseController {
 
@@ -33,7 +35,8 @@ class SessionsController extends BaseController {
 		return View::make('sessions.create');
 	}
 
-	/**
+	 
+	 /**
 	 * Save the user.
 	 */
 	public function store()
@@ -44,10 +47,26 @@ class SessionsController extends BaseController {
 
 		if (Auth::attempt($formData)) {
 			Flash::message('Welcome back to Talent4Startups!');
-			return Redirect::intended('');
+			
+		        $profile = Profile::where('user_id','=',Auth::id())->first();
+                    
+			if(!empty($profile['first_name'])&&!empty($profile['last_name'])){
+			     //user has created profile
+				$talentSkills = Skill::getUserProfileSkills($profile); 
+			
+				if(count($talentSkills)>0){
+				// user has added skills to profile , redirect to projects
+				return Redirect::intended('');
+				}
+			}
+			// if profile is null, redirect to profile
+			return Redirect::intended('profile');
 		}
 	}
-
+         
+        /*         
+         * Logout the user
+         */
 	public function destroy()
 	{
 		Auth::logout();

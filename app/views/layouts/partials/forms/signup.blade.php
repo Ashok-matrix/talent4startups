@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'register_path']) }}
+{{ Form::open(['route' => 'register_path','name'=>'registeration-form','id'=>'registeration-form']) }}
 
 	<div class="form-group">
 		{{ Form::label('username', 'Username:') }}
@@ -20,8 +20,10 @@
 		{{ Form::password('password_confirmation', ['class' => 'form-control']) }}
 	</div>
 
+
 	<div class="form-group">
-		{{ Form::submit('Sign Up', ['id' => 'submit-registration','class' => 'btn btn-primary']) }}
+		{{ Form::submit('Sign Up', ['id' => 'submit-registration','name' => 'submit-registration','class' => 'btn btn-primary']) }}
 	</div>
 
 {{ Form::close() }}
+

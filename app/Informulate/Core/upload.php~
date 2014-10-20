@@ -1,0 +1,21 @@
+<?php namespace Informulate\Core;
+
+use App;
+
+class Upload{
+	
+	/*
+	 * var $source
+	 */	
+	private $source;
+
+	/*
+	 * var $destination
+	 */	
+	private $destination;
+
+	public function __construct($source,$destination){
+		$this->source 	   = $source;
+		$this->destination = $destination
+	}
+}

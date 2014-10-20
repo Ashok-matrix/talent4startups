@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => 2,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -126,6 +126,8 @@ return array(
 		'Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider',
 		'Laracasts\Validation\ValidationServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
+		"Cocur\Slugify\Bridge\Laravel\SlugifyServiceProvider",
+		"Intervention\Image\ImageServiceProvider",
 
 	),
 
@@ -194,6 +196,8 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
 		'Flash'             => 'Laracasts\Flash\Flash',
+		"Slugify"           => "Cocur\Slugify\Bridge\Laravel\SlugifyFacade",
+		'Image'             => 'Intervention\Image\Facades\Image',
 
 	),
 
