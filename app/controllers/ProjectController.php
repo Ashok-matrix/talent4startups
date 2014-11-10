@@ -5,6 +5,7 @@ use Informulate\Forms\ProjectForm;
 use Informulate\Projects\CreateNewProjectCommand;
 use Informulate\Core\CommandBus;
 use Informulate\Projects\Project;
+use Informulate\Ratings\Rating;
 use Informulate\Projects\ProjectRepository;
 use Informulate\Describes\Describe;
 use Informulate\Users\User;
@@ -83,7 +84,6 @@ class ProjectController extends BaseController {
 		$project = Project::where('url', '=', $project)->firstOrFail();
 		$requests = $project->members()->where('pending', true)->get();
 		$members = $project->members()->where('approved', true)->get();
-
 		return View::make('project.show')->with('project', $project)->with('requests', $requests)->with('members', $members);
 	}
 
@@ -95,7 +95,7 @@ class ProjectController extends BaseController {
 	public function findProjects(){
 		if(Request::ajax()) {
 		//continue if AJAX request
-		$projects = Project::where('status', '=', '1');
+		$projects = Project::where('status', '>=', '0');
 		if(!empty(Input::get('tag'))){
 		// if user has entered tag
 		$tag = !empty(Input::get('tag'))?Tag::where('name', '=', Input::get('tag'))->first():'';
@@ -114,6 +114,30 @@ class ProjectController extends BaseController {
 		$projects = $projects->paginate(16);
 
 		return View::make('project.index-project')->with('projects', $projects)->render();
+		}
+	}
+
+	/*
+	* Save rating in database
+	*/
+	public function saveRating(){
+		if(Request::ajax()){
+			//proceed if ajax request
+			extract(Input::only('receiverId','providerId','projectId','rate'));
+			$rating = Rating::where('project_id','=',$projectId)->where('provider_id','=',$providerId)->where('receiver_id','=',$receiverId)->first();
+			if(is_object($rating) && sizeof($rating)>0){
+				// update, if rating to receiver by same provider already exists
+				$rating->rating = $rate;
+				$rating->save();
+			}else{
+				// save, if rating to receiver by same provider does not exists
+				$rating = new Rating;
+				$rating->project_id = $projectId;
+				$rating->provider_id = $providerId;
+				$rating->receiver_id = $receiverId;
+				$rating->rating = $rate;
+				$rating->save();
+			}
 		}
 	}
 

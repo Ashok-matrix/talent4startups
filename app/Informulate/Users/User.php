@@ -5,6 +5,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableTrait;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Informulate\Registration\Events\UserRegistered;
+use Informulate\Ratings\Rating;
 use Laracasts\Commander\Events\EventGenerator;
 use Eloquent, Hash;
 
@@ -71,6 +72,27 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function setPasswordAttribute($password)
 	{
 		$this->attributes['password'] = Hash::make($password);
+	}
+
+	/**
+	 * The user's ratings
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function ratings()
+	{
+		return $this->hasMany('Informulate\Ratings\Rating','receiver_id');
+	}
+
+	/**
+	 * The project's contributors rating by owner
+	 * @param $receiver_id
+	 * @param $project_id
+	 * @return object
+	 */
+	public function userProjectRating($receiver_id,$project_id)
+	{
+		return Rating::where('project_id','=',$project_id)->where('receiver_id','=',$receiver_id)->first();
 	}
 
 	/**

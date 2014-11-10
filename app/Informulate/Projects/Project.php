@@ -3,6 +3,7 @@
 use DB;
 use Informulate\Projects\Events\ProjectCreated;
 use Informulate\Users\User;
+use Informulate\Ratings\Rating;
 use Laracasts\Commander\Events\EventGenerator;
 use Eloquent;
 
@@ -95,6 +96,27 @@ class Project extends Eloquent {
 	public function tags()
 	{
 		return $this->belongsToMany('Informulate\Tags\Tag');
+	}
+
+	/**
+	 * The project's rating
+	 * @param $owner_id
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function ratings($owner_id)
+	{
+		return $this->hasMany('Informulate\Ratings\Rating')->where('receiver_id','=',$owner_id);
+	}
+
+	/**
+	 * The contributor rating to project
+	 * @param $receiver_id
+	 * @param $project_id
+	 * @return object
+	 */
+	public function projectContributorRating($contributor_id,$project_id)
+	{
+		return Rating::where('project_id','=',$project_id)->where('provider_id','=',$contributor_id)->first();
 	}
 
 	/**

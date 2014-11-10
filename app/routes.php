@@ -56,6 +56,12 @@ Route::post('project/findProjects', [
 	'uses' => 'ProjectController@findProjects'
 ]);
 
+Route::post('project/saveRating', [
+	'as' => 'save_rating',
+	'uses' => 'ProjectController@saveRating'
+]);
+
+
 Route::get('projects/{id}/membership', [
 	'as' => 'project_membership_request',
 	'uses' => 'MembershipController@request'

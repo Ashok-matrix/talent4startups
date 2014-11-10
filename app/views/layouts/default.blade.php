@@ -7,6 +7,7 @@
 		<link href="{{{ asset( 'css/vendors/bootstrap/bootstrap.min.css' ) }}}" rel="stylesheet">
 		<link href="{{{ asset( 'css/main.css' ) }}}" rel="stylesheet">
 		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="{{{ asset( 'css/star-rating.css' ) }}}" rel="stylesheet">
 		<script src="{{{ asset( 'js/vendors/jquery/jquery-2.1.1.min.js' ) }}}"></script>
 	</head>
 	<body>
